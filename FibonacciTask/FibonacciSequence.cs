@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace FibonacciTask
@@ -9,7 +10,8 @@ namespace FibonacciTask
     /// <seealso cref="https://en.wikipedia.org/wiki/Fibonacci_number"/>
     public class FibonacciSequence
     {
-        //TODO: Add necessary code and/or remove this comment.
+        private long[] sequence;
+        private int currentIndex = -1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FibonacciSequence"/> class.
@@ -18,7 +20,20 @@ namespace FibonacciTask
         /// <exception cref="ArgumentException">Thrown if count of elements less than one.</exception>
         public FibonacciSequence(int count)
         {
-            throw new NotImplementedException();
+            if (count < 1) 
+                throw new ArgumentException($"{nameof(count)} of elements cannot be less than one.");
+
+            long prev = 0;
+            long curr = 1;
+            this.sequence = new long[count];
+            for (int i = 0; i < count; i++)
+            {
+                this.sequence[i] = prev;
+                long temp = prev + curr;
+                prev = curr;
+                curr = temp;
+            }
+
         }
 
         /// <summary>
@@ -29,8 +44,7 @@ namespace FibonacciTask
         /// </value>
         public BigInteger Current
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => this.sequence[currentIndex];
         }
 
         /// <summary>
@@ -41,7 +55,13 @@ namespace FibonacciTask
         /// </returns>
         public bool MoveNext()
         {
-            throw new NotImplementedException();
+            currentIndex++;
+            if (currentIndex < sequence.Length)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -49,7 +69,7 @@ namespace FibonacciTask
         /// </summary>
         public void Reset()
         {
-            throw new NotImplementedException();
+            currentIndex = -1;
         }
     }
 }
